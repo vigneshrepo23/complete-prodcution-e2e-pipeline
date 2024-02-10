@@ -13,5 +13,11 @@ pipeline {
                 cleanWs()
             }
         } 
+
+        stage ("git checkout") {
+            steps {
+                git branch: 'main', crdentialsId: 'gitcred', url: 'https://github.com/vigneshrepo23/complete-prodcution-e2e-pipeline'
+            }
+        }
     }
 }
