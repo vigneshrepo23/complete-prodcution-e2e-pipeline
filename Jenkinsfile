@@ -19,5 +19,17 @@ pipeline {
                 git branch: 'main', credentialsId: 'gitcred', url: 'https://github.com/vigneshrepo23/complete-prodcution-e2e-pipeline'
             }
         }
+
+        stage ("build") {
+            steps {
+                sh "mvn clean package"
+            }
+        }
+
+        stage ("test") {
+            steps {
+                sh "mvn test"
+            }
+        }
     }
 }
