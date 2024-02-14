@@ -31,5 +31,13 @@ pipeline {
                 sh "mvn test"
             }
         }
+
+        stage ("sonarqube analysis") {
+            steps {
+                withSonarQubeEnv('mysonar') {
+                sh "mvn sonar:sonar"
+               }  
+            } 
+        }
     }
 }
