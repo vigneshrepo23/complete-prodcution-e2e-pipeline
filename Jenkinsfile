@@ -12,7 +12,8 @@ pipeline {
         RELEASE = "1.0.0"
         DOCKER_USERNAME = "vigneshrepo23"
         DOCKER_PASS = "dockerpass"
-        IMAGE_NAME = ""
+        IMAGE_NAME = "${DOCKER_USERNAME}" + "/" + "${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}" + "${BUILD_NO}"
     }
 
     stages {
@@ -53,6 +54,14 @@ pipeline {
                 timeout(time: 1, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
                }
+            }
+        }
+
+        stage ("docker push") {
+            steps {
+                docker.withRegistry{"",DOCKER_PASS} {
+                    docker_image = docker.build "${IMAGE_NAME}"
+                }
             }
         }
     }
