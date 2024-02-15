@@ -7,6 +7,14 @@ pipeline {
         maven "maven3"
     }
 
+    environment {
+        APP_NAME = "test-project"
+        RELEASE = "1.0.0"
+        DOCKER_USERNAME = "vigneshrepo23"
+        DOCKER_PASS = "dockerpass"
+        IMAGE_NAME = ""
+    }
+
     stages {
         stage ("cleanWs"){
             steps {
