@@ -59,8 +59,10 @@ pipeline {
 
         stage ("docker push") {
             steps {
-                withCredentials([string(credentialsId: 'dockertoken', variable: 'dockerpass')]) {
-                  docker_image = docker.build "${IMAGE_NAME}"
+                script {
+                    withCredentials([string(credentialsId: 'dockertoken', variable: 'dockerpass')]) {
+                      docker_image = docker.build "${IMAGE_NAME}"
+                    }
                 }
             }
         }
