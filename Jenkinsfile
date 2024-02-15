@@ -11,7 +11,7 @@ pipeline {
         APP_NAME = "test-project"
         RELEASE = "1.0.0"
         DOCKER_USERNAME = "vigneshrepo23"
-        DOCKER_PASS = "dockerpass"
+        DOCKER_PASS = "dockertoken"
         IMAGE_NAME = "${DOCKER_USERNAME}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}" + "${BUILD_NO}"
     }
@@ -59,8 +59,8 @@ pipeline {
 
         stage ("docker push") {
             steps {
-                docker.withRegistry{'https://registry.hub.docker.com', DOCKER_PASS} {
-                    docker_image = docker.build "${IMAGE_NAME}"
+                withCredentials([string(credentialsId: 'dockertoken', variable: 'dockerpass')]) {
+                  docker_image = docker.build "${IMAGE_NAME}"
                 }
             }
         }
