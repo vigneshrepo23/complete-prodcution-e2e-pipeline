@@ -57,11 +57,22 @@ pipeline {
             }
         }
 
-        stage ("docker push") {
+        stage ("docker build") {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockertoken', variable: 'dockerpass')]) {
                       docker_image = docker.build "${IMAGE_NAME}"
+                    }
+                }
+            }
+        }
+
+        stage ("docker push") {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dockertoken', variable: 'dockerpass')]) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')                    
                     }
                 }
             }
